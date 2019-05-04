@@ -1,0 +1,32 @@
+<meta charset="UTF-8">
+<div class="container">
+	<div class="row">
+		<div class="col-8" *ngIf="rendszer">
+			<h2>{{rendszer.name}} modulok.</h2>
+			<button class="btn btn-primary" title="Új modul létrehozása" routerLink="/modul/{{rendszer.id}}">
+						Új modul létrehozása</button>
+			<table class="table">
+				<thead>
+					<tr>
+						<th scope="col">#</th>
+						<th scope="col">Name</th>
+						<th scope="col">Desc</th>
+						<th scope="col"></th>
+						<th scope="col"></th>						
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let modul of rendszer.moduls" >
+						<th scope="row">{{modul.id}}</th>
+						<td>{{modul.name}}</td>
+						<td>{{ modul.desc }}</td>
+						<td><button class="btn btn-primary" title="{{modul.name}} modul szerkesztése" routerLink="/modul/{{rendszer.id}}/{{modul.id}}">
+						<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button></td>
+						<td><button class="btn btn-danger" title="{{modul.name}} törlése" (click)="deleteModul(modul)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button></td>
+					</tr>
+				</tbody>
+			</table>
+			<button (click)="goBack()" class="btn btn-dark">Vissza</button>
+		</div>
+	</div>
+</div>

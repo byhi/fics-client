@@ -1,0 +1,59 @@
+<meta charset="UTF-8">
+<div class="container">
+	<div class="row">
+		<div class="col-8">
+			<h2>Rendszer Lista</h2>
+			<button class="btn btn-primary" title="Új rendszer létrehozása" routerLink="/rendszer/">Új rendszer</button>
+			<button class="btn btn-primary" title="Új modul létrehozása" routerLink="/modul/">	Új modul létrehozása</button>
+			<table class="table">
+				<thead>
+					<tr> 
+						<th scope="col">#</th>
+						<th scope="col">Name</th>
+						<th scope="col">Desc</th>
+						<th scope="col"></th>
+						<th scope="col"></th>	
+						<th scope="col"></th>						
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let rendszer of rendszerek">
+						<th scope="row">{{rendszer.id}}</th>
+						<td>{{rendszer.name}}</td>
+						<td>{{ rendszer.desc }}</td>
+						<td><button class="btn btn-primary" title="{{rendszer.name}} moduljainak megtekintése" [class.selected]="rendszer === selectedRendszer"
+    (click)="onSelect(rendszer)"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></button></td>
+						<td><button class="btn btn-primary" title="{{rendszer.name}} rendszer szerkesztése" routerLink="/rendszer/{{rendszer.id}}">
+						<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button></td>
+						<td><button class="btn btn-danger" title="{{rendszer.name}} törlése" (click)="deleteRendszer(rendszer)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	
+	<div *ngIf="selectedRendszer">
+	<table class="table">
+				<thead>
+					<tr>
+						<th scope="col">#</th>
+						<th scope="col">Name</th>
+						<th scope="col">Desc</th>
+						<th scope="col"></th>
+						<th scope="col"></th>				
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let modul of selectedRendszer.moduls" >
+						<th scope="row">{{modul.id}}</th>
+						<td>{{modul.name}}</td>
+						<td>{{ modul.desc }}</td>
+						 
+						<td><button class="btn btn-primary" title="{{modul.name}} modul szerkesztése" routerLink="/modul/{{selectedRendszer.id}}/{{modul.id}}">
+						<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button></td>
+						<td><button class="btn btn-danger" title="{{modul.name}} törlése" (click)="deleteModul(modul)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button></td>
+					</tr>
+				</tbody>
+			</table>
+	</div>
+</div>

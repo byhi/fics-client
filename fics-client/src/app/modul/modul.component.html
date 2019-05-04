@@ -1,0 +1,50 @@
+<meta charset="UTF-8">
+<div *ngIf="rendszer && modul">
+	<h2 *ngIf="modul.id == 0">Létrehozás</h2>
+	<h2 *ngIf="modul.id != 0">Szerkesztés</h2>
+	<h2 *ngIf="modul">{{modul.name | uppercase}}</h2>
+	<h4 *ngIf="rendszer">{{rendszer.name | uppercase}}</h4>
+	<div *ngIf="modul.id != 0">
+		<span>id: </span>{{modul.id}}
+	</div>
+	<div>
+		<label>Select list:</label> <select class="form-control"
+			[(ngModel)]="rendszer">
+			<option *ngFor="let rendszer of rendszerek" [ngValue]="rendszer">{{rendszer.name}}</option>
+		</select>
+
+	</div>
+	<div>
+		<label>name: </label> <input type="text" class="form-control"
+			id="name" #name="ngModel" [(ngModel)]="modul.name" placeholder="name"
+			required maxlength="32" />
+		<div *ngIf="name.invalid && (name.dirty || name.touched)"
+			class="alert alert-danger">
+			<div *ngIf="name.errors.required">Name is required.</div>
+			<div *ngIf="name.errors.maxlength">Name is long.</div>
+		</div>
+
+	</div>
+	<div>
+		<label>desc: </label> <input type="text" class="form-control"
+			id="desc" #desc="ngModel" [(ngModel)]="modul.desc" placeholder="desc"
+			required maxlength="2000" />
+		<div *ngIf="desc.invalid && (desc.dirty || desc.touched)"
+			class="alert alert-danger">
+			<div *ngIf="desc.errors.required">Desc is required.</div>
+			<div *ngIf="desc.errors.maxlength">Desc is long.</div>
+		</div>
+
+	</div>
+	<div *ngIf="modul.id == 0 ; then thenBlock else elseBlock"></div>
+	<ng-template #thenBlock>
+	<button (click)="createModul(modul,rendszer)" class="btn btn-primary">Mentés</button>
+	</ng-template>
+	<ng-template #elseBlock>
+	<button (click)="updateModul(modul,rendszer)" class="btn btn-primary">Frissítés</button>
+	</ng-template>
+
+	<div>
+		<button (click)="goBack()" class="btn btn-dark">Vissza</button>
+	</div>
+</div>

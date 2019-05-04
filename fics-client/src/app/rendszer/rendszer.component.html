@@ -1,0 +1,44 @@
+<meta charset="UTF-8">
+<div *ngIf="rendszer">
+	<h2 *ngIf="rendszer.id == 0">Létrehozás</h2>
+	<h2 *ngIf="rendszer.id != 0">Szerkesztés</h2>
+	<h2>{{rendszer.name | uppercase}}</h2>
+	<div *ngIf="rendszer.id != 0">
+		<span>id: </span>{{rendszer.id}}
+	</div>
+	<div>
+		<div>
+			<label>name: <input class="form-control"
+				[(ngModel)]="rendszer.name" placeholder="name" id="name"
+				#name="ngModel" type="text" required maxlength="32" />
+				<div *ngIf="name.invalid && (name.dirty || name.touched)"
+					class="alert alert-danger">
+					<div *ngIf="name.errors.required">Name is required.</div>
+					<div *ngIf="name.errors.maxlength">Name is long.</div>
+				</div>
+			</label>
+		</div>
+		<div>
+			<label>desc: <input class="form-control"
+				[(ngModel)]="rendszer.desc" placeholder="desc" id="desc"
+				#desc="ngModel" type="text" required maxlength="2000" />
+				<div *ngIf="desc.invalid && (desc.dirty || desc.touched)"
+					class="alert alert-danger">
+					<div *ngIf="desc.errors.required">Desc is required.</div>
+					<div *ngIf="desc.errors.maxlength">Desc is long.</div>
+				</div>
+			</label>
+		</div>
+	</div>
+	<div *ngIf="rendszer.id == 0 ; then thenBlock else elseBlock"></div>
+	<ng-template #thenBlock>
+	<button (click)="createRendszer(rendszer)" class="btn btn-primary">Mentés</button>
+	</ng-template>
+	<ng-template #elseBlock>
+	<button (click)="updateRendszer(rendszer)" class="btn btn-primary">Mentés</button>
+	</ng-template>
+
+	<div>
+		<button (click)="goBack()" class="btn btn-dark">Vissza</button>
+	</div>
+</div>
